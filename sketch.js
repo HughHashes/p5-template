@@ -49,11 +49,15 @@ function draw(){
                 }
                 
                 if(key=="6"){
-                    red_filter(startingIndex, r, g, b, a);
+                    xray_filter(startingIndex, r, g, b, a);
+                }
+                
+                if(key=="9"){
+                    random_filter(startingIndex, r, g, b, a, col, row);
                 }
                 
                 if(key=="7"){
-                    blue_filter(startingIndex, r, g, b, a);
+                    percent_filter(startingIndex, r, g, b, a);
                 }
                 
                 if(key=="8"){
@@ -78,50 +82,72 @@ function gray_filter(startingIndex, r, g, b, a){
 }
 
 function purple_filter(startingIndex, r, g, b, a){
-    pixels[startingIndex + 0] = r + 200;
+    pixels[startingIndex + 0] = b;
     pixels[startingIndex + 1] = g;
-    pixels[startingIndex + 2] = b + 255;
+    pixels[startingIndex + 2] = r;
     pixels[startingIndex + 3] = a;
 }
 
 function yellow_filter(startingIndex, r, g, b, a){
-    pixels[startingIndex + 0] = r + 255;
-    pixels[startingIndex + 1] = g + 255;
+    pixels[startingIndex + 0] = 0;
+    pixels[startingIndex + 1] = 0;
     pixels[startingIndex + 2] = b;
     pixels[startingIndex + 3] = a;
 }
 
 function green_filter(startingIndex, r, g, b, a){
-    pixels[startingIndex + 0] = r;
-    pixels[startingIndex + 1] = g + 255;
-    pixels[startingIndex + 2] = b;
+    pixels[startingIndex + 0] = r / 2;
+    pixels[startingIndex + 1] = g / 2;
+    pixels[startingIndex + 2] = b / 2;
     pixels[startingIndex + 3] = a;
 }
 
 function cyan_filter(startingIndex, r, g, b, a){
-    pixels[startingIndex + 0] = r;
-    pixels[startingIndex + 1] = g + 255;
-    pixels[startingIndex + 2] = b + 255;
+    pixels[startingIndex + 0] = r * 2;
+    pixels[startingIndex + 1] = g * 2;
+    pixels[startingIndex + 2] = b * 2;
     pixels[startingIndex + 3] = a;
 }
 
-function red_filter(startingIndex, r, g, b, a){
-    pixels[startingIndex + 0] = r + 255;
-    pixels[startingIndex + 1] = g;
-    pixels[startingIndex + 2] = b;
+function xray_filter(startingIndex, r, g, b, a){
+    pixels[startingIndex + 0] = 255 - r;
+    pixels[startingIndex + 1] = 255 - g;
+    pixels[startingIndex + 2] = 255 - b;
     pixels[startingIndex + 3] = a;
 }
 
-function blue_filter(startingIndex, r, g, b, a){
-    pixels[startingIndex + 0] = r;
-    pixels[startingIndex + 1] = g;
-    pixels[startingIndex + 2] = b + 255;
-    pixels[startingIndex + 3] = a;
+function percent_filter(startingIndex, r, g, b, a){
+    if(startingIndex % 20 == 0){
+        pixels[startingIndex + 0] = 0;
+        pixels[startingIndex + 1] = 255;
+        pixels[startingIndex + 2] = 0;
+        pixels[startingIndex + 3] = a;
+    }
+}
+
+function random_filter(startingIndex, r, g, b, a, col, row){
+    
+    if(startingIndex % 20 == 0){
+        pixels[startingIndex + 0] = r + col * 2;
+        pixels[startingIndex + 1] = g * row - 4;
+        pixels[startingIndex + 2] = b + 10 + row;
+        pixels[startingIndex + 3] = a;
+    }
+    
+    if(startingIndex % 30 == 0){
+        pixels[startingIndex + 0] = r +255;
+        pixels[startingIndex + 1] = g;
+        pixels[startingIndex + 2] = b;
+        pixels[startingIndex + 3] = a;
+    }
 }
 
 function pretty_purple_filter(startingIndex, r, g, b, a){
-    pixels[startingIndex + 0] = r + 113;
-    pixels[startingIndex + 1] = g + 27;
-    pixels[startingIndex + 2] = b + 170;
-    pixels[startingIndex + 3] = a;
+    
+    var lastPixel = pixels.length - 1;
+    
+    pixels[lastPixel - startingIndex - 3] = r;
+    pixels[lastPixel - startingIndex - 2] = g;
+    pixels[lastPixel - startingIndex - 1] = b;
+    pixels[lastPixel - startingIndex - 0] = a;
 }
